@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController {
     
     let cityList:[String] = ["Bodrum", "Yalıkavak", "Fethiye", "İzmir", "İstanbul"]
+    let plateList:[String] = ["48", "48", "48", "35", "34"]
+    let capacityList:[String] = ["200K", "50K", "208K", "5M", "16M"]
     
     let attrValueCity:String = "city"
     let attrName:String = "Click"
@@ -48,6 +50,8 @@ extension ViewController:UITableViewDelegate, UITableViewDataSource {
         let city:NSMutableAttributedString = NSMutableAttributedString(string: cityName, attributes: foreColorCityName)
         let r1 = NSRange(location: 0, length: city.length)
         city.addAttributes([self.attrName: self.attrValueCity], range: r1)
+        city.addAttribute("plate", value: plateList[indexPath.row], range: r1)
+        city.addAttribute("capacity", value: capacityList[indexPath.row], range: r1)
         
         // add cityname to static string named visit
         visit.appendAttributedString(city)
@@ -84,11 +88,13 @@ extension ViewController:UIGestureRecognizerDelegate {
             if let value = attributeValue {
                 if value == attrValueCity {
                     
-                    // TODO: get value of the city
-                    print("run here")
+                    let plate = myTextView.textStorage.attribute("plate", atIndex: characterIndex, effectiveRange: nil)
+                    print("plate:\(plate)")
+                    
+                    let capacity = myTextView.textStorage.attribute("capacity", atIndex: characterIndex, effectiveRange: nil)
+                    print("plate:\(capacity)")
                 }
             }
         }
     }
 }
-
