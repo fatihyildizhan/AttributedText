@@ -10,9 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let cityList:[String] = ["Bodrum", "Yalıkavak", "Fethiye", "İzmir", "İstanbul", "Kahramanmaraş"]
-    let plateList:[String] = ["48", "48", "48", "35", "34", "46"]
-    let capacityList:[String] = ["200K", "50K", "208K", "5M", "16M", "2B"]
+    let cityList:[String] = ["Bodrum", "Yalıkavak", "Fethiye", "İzmir", "İstanbul", "Kahramanmaraş", "Antalya"]
+    let plateList:[String] = ["48", "48", "48", "35", "34", "46", "07"]
+    let capacityList:[String] = ["200K", "50K", "208K", "5M", "16M", "2B", "174K"]
     
     let attrValueCity:String = "city"
     let attrName:String = "Click"
