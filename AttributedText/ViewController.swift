@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK:- add tableview functions
 extension ViewController:UITableViewDelegate, UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -72,6 +73,7 @@ extension ViewController:UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK:- add UIGestureRecognizerDelegate's functions
 extension ViewController:UIGestureRecognizerDelegate {
     func TapHandler(sender: UITapGestureRecognizer) {
         
