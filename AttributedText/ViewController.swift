@@ -34,41 +34,41 @@ extension ViewController:UITableViewDelegate, UITableViewDataSource {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return cityList.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let nib: NSArray = NSBundle.mainBundle().loadNibNamed("CityTableViewCell", owner: tableView, options: nil)
-        let cell = nib.objectAtIndex(0) as! CityTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let nib: NSArray = Bundle.main.loadNibNamed("CityTableViewCell", owner: tableView, options: nil)! as NSArray
+        let cell = nib.object(at: 0) as! CityTableViewCell
         
-        let foreColorFrom = [NSForegroundColorAttributeName: UIColor.blackColor()]
+        let foreColorFrom = [NSAttributedString.Key.foregroundColor: UIColor.black]
         let visit:NSMutableAttributedString = NSMutableAttributedString(string: "you should visit ", attributes: foreColorFrom)
         
         // follow
         let cityName:String = cityList[indexPath.row]
-        let foreColorCityName = [NSForegroundColorAttributeName: UIColor.redColor()]
+        let foreColorCityName = [NSAttributedString.Key.foregroundColor: UIColor.red]
         let city:NSMutableAttributedString = NSMutableAttributedString(string: cityName, attributes: foreColorCityName)
         let r1 = NSRange(location: 0, length: city.length)
-        city.addAttributes([self.attrName: self.attrValueCity], range: r1)
-        city.addAttribute("plate", value: plateList[indexPath.row], range: r1)
-        city.addAttribute("capacity", value: capacityList[indexPath.row], range: r1)
+        city.addAttributes([NSAttributedString.Key(rawValue: self.attrName): self.attrValueCity], range: r1)
+        city.addAttribute(NSAttributedString.Key(rawValue: "plate"), value: plateList[indexPath.row], range: r1)
+        city.addAttribute(NSAttributedString.Key(rawValue: "capacity"), value: capacityList[indexPath.row], range: r1)
         
         // add cityname to static string named visit
-        visit.appendAttributedString(city)
+        visit.append(city)
     
         // add whole attributed string to labels
         cell.textView.attributedText = visit
         
         // add click handler
-        let tap = UITapGestureRecognizer(target: self, action: Selector("TapHandler:"))
+        let tap = UITapGestureRecognizer(target: self, action: Selector(("TapHandler:")))
         tap.delegate = self
         cell.textView.addGestureRecognizer(tap)
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+    private func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         print("selected:\(indexPath)")
     }
 }
@@ -80,21 +80,21 @@ extension ViewController:UIGestureRecognizerDelegate {
         let myTextView = sender.view as! UITextView
         let layoutManager = myTextView.layoutManager
         
-        var location = sender.locationInView(myTextView)
+        var location = sender.location(in: myTextView)
         location.x -= myTextView.textContainerInset.left;
         location.y -= myTextView.textContainerInset.top;
         
-        let characterIndex = layoutManager.characterIndexForPoint(location, inTextContainer: myTextView.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        let characterIndex = layoutManager.characterIndex(for: location, in: myTextView.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         if characterIndex < myTextView.textStorage.length {
-            let attributeValue = myTextView.textStorage.attribute(attrName, atIndex: characterIndex, effectiveRange: nil) as? String
+            let attributeValue = myTextView.textStorage.attribute(NSAttributedString.Key(rawValue: attrName), at: characterIndex, effectiveRange: nil) as? String
             if let value = attributeValue {
                 if value == attrValueCity {
                     
-                    let plate = myTextView.textStorage.attribute("plate", atIndex: characterIndex, effectiveRange: nil)
-                    print("plate:\(plate)")
+                    let plate = myTextView.textStorage.attribute(NSAttributedString.Key(rawValue: "plate"), at: characterIndex, effectiveRange: nil)
+                    print("plate:\(String(describing: plate))")
                     
-                    let capacity = myTextView.textStorage.attribute("capacity", atIndex: characterIndex, effectiveRange: nil)
-                    print("plate:\(capacity)")
+                    let capacity = myTextView.textStorage.attribute(NSAttributedString.Key(rawValue: "capacity"), at: characterIndex, effectiveRange: nil)
+                    print("plate:\(String(describing: capacity))")
                 }
             }
         }
