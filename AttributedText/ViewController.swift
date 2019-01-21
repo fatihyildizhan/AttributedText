@@ -94,7 +94,7 @@ extension ViewController:UIGestureRecognizerDelegate {
                     print("plate:\(String(describing: plate))")
                     
                     let capacity = myTextView.textStorage.attribute(NSAttributedString.Key(rawValue: "capacity"), at: characterIndex, effectiveRange: nil)
-                    print("plate:\(String(describing: capacity))")
+                    print("plate :\(String(describing: capacity))")
                 }
             }
         }
